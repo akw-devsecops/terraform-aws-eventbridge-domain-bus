@@ -47,7 +47,7 @@ resource "aws_cloudwatch_event_target" "this" {
   for_each = { for sub in local.domain_subscriptions : "${sub.name}-${sub.domain}" => sub }
 
   event_bus_name = aws_cloudwatch_event_bus.this.arn
-
-  rule = "${each.value.name}-${each.value.domain}"
-  arn  = each.value.target_bus_arn
+  role_arn       = aws_iam_role.domain_bus_invoke_local_event_buses.arn
+  rule           = "${each.value.name}-${each.value.domain}"
+  arn            = each.value.target_bus_arn
 }
