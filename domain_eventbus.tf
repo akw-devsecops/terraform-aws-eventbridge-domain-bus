@@ -6,7 +6,7 @@ resource "aws_cloudwatch_event_bus" "this" {
 }
 
 data "aws_iam_policy_document" "this" {
-  count = var.publishers == null ? 0 : 1
+  count = var.publishers != null && length(var.publishers) > 0 ? 1 : 0
   statement {
     sid    = "Publisher"
     effect = "Allow"
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "this" {
 
 # create policy for domain bus
 resource "aws_cloudwatch_event_bus_policy" "this" {
-  count          = var.publishers == null ? 0 : 1
+  count          = var.publishers != null && length(var.publishers) > 0 ? 1 : 0
   event_bus_name = aws_cloudwatch_event_bus.this.name
   policy         = data.aws_iam_policy_document.this[0].json
 }

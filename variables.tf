@@ -8,7 +8,7 @@ variable "publishers" {
   type = map(object({
     iam_role_arn = string
   }))
-  default = null
+  default = {}
 }
 
 variable "tags" {
@@ -26,4 +26,5 @@ variable "subscribers" {
       event_version = string
     }))
   }))
+  default = {}
 }
