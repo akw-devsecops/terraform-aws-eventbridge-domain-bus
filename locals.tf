@@ -12,11 +12,11 @@ locals {
     ]
   ])
 
-  all_targets = flatten([
+  all_targets = try(flatten([
     for dk, dv in var.subscribers : [
       for ek, ev in dv.event_subscriptions : [
         dv.target_bus_arn
       ]
     ]
-  ])
+  ]), [])
 }
