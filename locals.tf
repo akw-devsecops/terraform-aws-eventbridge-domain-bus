@@ -7,7 +7,6 @@ locals {
         name           = ek
         description    = "${dk} domain bus subscription"
         event_pattern  = jsonencode({ "detail.type" : [ev.event_type] })
-        event_version  = ev.event_version
       }
     ]
   ])
