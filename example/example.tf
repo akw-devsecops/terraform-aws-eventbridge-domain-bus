@@ -18,11 +18,10 @@ module "xxx-domain" {
       target_bus_arn   = ""     # ARN of the target bus (bus in "xy" account which is to receive the events)
       event_subscriptions = {
         new_software_release_available_v1 = { # this name + domain-name is used for creating the rule
-          event_type    = ""                  # this will be used as the pattern for the rule
-          event_version = ""                  # this is the version of the event
+          event_type = ""                     # this will be used as the pattern for the rule
         },
         new_software_release_available_v2 = {
-          event_type    = ""
+          event_type = ""
         }
       }
     },
@@ -32,11 +31,10 @@ module "xxx-domain" {
       target_bus_arn   = "" # ARN of the target bus (bus in "xz" account)
       event_subscriptions = {
         new_iot_event_available_v1 = { # this name + domain-name is used for creating the rule
-          event_type    = ""
-          event_version = ""
+          event_type = ""
         },
         new_iot_machine_registered_v1 = {
-          event_type    = ""
+          event_type = ""
         }
       }
     },
