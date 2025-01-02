@@ -24,7 +24,6 @@ variable "subscribers" {
     target_bus_arn   = string
     event_subscriptions = map(object({
       event_type    = string
-      event_version = string
     }))
   }))
   default = {}

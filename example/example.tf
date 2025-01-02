@@ -23,7 +23,6 @@ module "xxx-domain" {
         },
         new_software_release_available_v2 = {
           event_type    = ""
-          event_version = ""
         }
       }
     },
@@ -38,7 +37,6 @@ module "xxx-domain" {
         },
         new_iot_machine_registered_v1 = {
           event_type    = ""
-          event_version = ""
         }
       }
     },

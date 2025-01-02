@@ -37,7 +37,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_domain_bus_name"></a> [domain\_bus\_name](#input\_domain\_bus\_name) | A unique name for your EventBridge Bus | `string` | n/a | yes |
 | <a name="input_publishers"></a> [publishers](#input\_publishers) | All publishers (ARNs) which needs to publish events on central domain bus | <pre>map(object({<br>    iam_role_arn = string<br>  }))</pre> | `{}` | no |
-| <a name="input_subscribers"></a> [subscribers](#input\_subscribers) | Event subscriptions | <pre>map(object({<br>    consumer_service = string<br>    target_bus_arn   = string<br>    event_subscriptions = map(object({<br>      event_type    = string<br>      event_version = string<br>    }))<br>  }))</pre> | `{}` | no |
+| <a name="input_subscribers"></a> [subscribers](#input\_subscribers) | Event subscriptions | <pre>map(object({<br>    consumer_service = string<br>    target_bus_arn   = string<br>    event_subscriptions = map(object({<br>      event_type    = string<br>    }))<br>  }))</pre> | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to resources. | `map(string)` | `{}` | no |
 
 ## Outputs
