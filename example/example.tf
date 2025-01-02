@@ -14,7 +14,8 @@ module "xxx-domain" {
 
   domain_subscribers_empty_example = {
     xy-domain_software_data = { # Domain-Name: "xy" wants to subscribe events from "Software Data"
-      target_bus_arn = ""       # ARN of the target bus (bus in "xy" account which is to receive the events)
+      consumer_service = ""     # this is the name of the service which is subscribing the events
+      target_bus_arn   = ""     # ARN of the target bus (bus in "xy" account which is to receive the events)
       event_subscriptions = {
         new_software_release_available_v1 = { # this name + domain-name is used for creating the rule
           event_type    = ""                  # this will be used as the pattern for the rule
@@ -28,7 +29,8 @@ module "xxx-domain" {
     },
     # for a new subscriber such add a new block:
     xz-domain_software_data = { # Another domain-name: "xz" wants to subscribe events from "Software Data"
-      target_bus_arn = ""       # ARN of the target bus (bus in "xz" account)
+      consumer_service = ""
+      target_bus_arn   = "" # ARN of the target bus (bus in "xz" account)
       event_subscriptions = {
         new_iot_event_available_v1 = { # this name + domain-name is used for creating the rule
           event_type    = ""
