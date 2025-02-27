@@ -50,4 +50,7 @@ resource "aws_cloudwatch_event_target" "this" {
   role_arn       = aws_iam_role.domain_bus_invoke_local_event_buses.arn
   rule           = "${each.value.name}-${each.value.domain}"
   arn            = each.value.target_bus_arn
+
+  depends_on = [aws_cloudwatch_event_rule.this]
+
 }
