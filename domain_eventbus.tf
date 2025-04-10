@@ -54,3 +54,51 @@ resource "aws_cloudwatch_event_target" "this" {
   depends_on = [aws_cloudwatch_event_rule.this]
 
 }
+
+# create new relic policy for domain bus
+resource "newrelic_alert_policy" "domain_subscription_policy" {
+  name = "[${upper(var.env)}] EventHub - ${var.domain_bus_name} Domain Subscriber Policy"
+}
+
+# create new relic condition for domain bus rules
+resource "newrelic_nrql_alert_condition" "domain_subscription_failed_invocations" {
+  for_each = { for sub in local.domain_subscriptions : "${sub.name}-${sub.domain}" => sub }
+
+  name                           = "[${upper(var.env)}] EventHub - ${var.domain_bus_name}: Too many failed invocations for ${aws_cloudwatch_event_rule.this[each.key].name}"
+  policy_id                      = newrelic_alert_policy.domain_subscription_policy.id
+  expiration_duration            = 300
+  open_violation_on_expiration   = false
+  close_violations_on_expiration = true
+
+  nrql {
+    query = "SELECT sum(`aws.events.FailedInvocations`) FROM Metric WHERE `collector.name` = 'cloudwatch-metric-streams' AND `aws.accountId` = '${data.aws_caller_identity.current.account_id}' AND `aws.Namespace` = 'AWS/Events' AND aws.events.RuleName = '${aws_cloudwatch_event_rule.this[each.key].name}'"
+  }
+
+  critical {
+    operator              = "above"
+    threshold             = 5
+    threshold_duration    = 600
+    threshold_occurrences = "AT_LEAST_ONCE"
+  }
+}
+
+resource "newrelic_workflow" "domain_subscription_workflow" {
+  name = "[${upper(var.env)}] EventHub - ${var.domain_bus_name} Domain Subscriber Workflow"
+  muting_rules_handling = "DONT_NOTIFY_FULLY_MUTED_ISSUES"
+
+  issues_filter {
+    name = newrelic_alert_policy.domain_subscription_policy.name
+    type = "FILTER"
+
+    predicate {
+      attribute = "labels.policyIds"
+      operator  = "EXACTLY_MATCHES"
+      values    = [newrelic_alert_policy.domain_subscription_policy.id]
+    }
+  }
+
+  destination {
+    channel_id = newrelic_notification_channel.ops_webhook.id
+  }
+}
+

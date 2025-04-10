@@ -28,3 +28,21 @@ variable "subscribers" {
   }))
   default = {}
 }
+
+variable "env" {
+  description = "Environment name"
+  type        = string
+  validation {
+    condition     = contains(["dev", "test", "prod"], var.env)
+    error_message = "Environment must be one of 'dev', 'test', or 'prod'."
+  }
+}
+
+variable "ops_channel_webhook_url" {
+  description = "Ops channel webhook URL"
+  type        = string
+  validation {
+    condition     = can(regex("^https://chat.googleapis.com/v1/spaces/.*", var.ops_channel_webhook_url))
+    error_message = "Ops channel webhook URL must be a valid Google Chat webhook URL."
+  }
+}
