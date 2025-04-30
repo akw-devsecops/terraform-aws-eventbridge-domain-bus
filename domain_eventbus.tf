@@ -66,7 +66,6 @@ resource "newrelic_nrql_alert_condition" "domain_subscription_failed_invocations
 
   name                           = "[${upper(var.env)}] EventHub - ${var.domain_bus_name}: Too many failed invocations for ${aws_cloudwatch_event_rule.this[each.key].name}"
   policy_id                      = newrelic_alert_policy.domain_subscription_policy.id
-  expiration_duration            = 300
   open_violation_on_expiration   = false
   close_violations_on_expiration = true
 
