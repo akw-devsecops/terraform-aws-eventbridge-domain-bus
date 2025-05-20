@@ -82,7 +82,7 @@ resource "newrelic_nrql_alert_condition" "domain_subscription_failed_invocations
 }
 
 resource "newrelic_workflow" "domain_subscription_workflow" {
-  name = "[${upper(var.env)}] EventHub - ${var.domain_bus_name} Domain Subscriber Workflow"
+  name                  = "[${upper(var.env)}] EventHub - ${var.domain_bus_name} Domain Subscriber Workflow"
   muting_rules_handling = "DONT_NOTIFY_FULLY_MUTED_ISSUES"
 
   issues_filter {
