@@ -20,10 +20,10 @@ variable "tags" {
 variable "subscribers" {
   description = "Event subscriptions"
   type = map(object({
-    consumer_service = string
-    target_bus_arn   = string
+    target_bus_arn = string
     event_subscriptions = map(object({
-      event_type    = string
+      event_type   = string
+      extra_filter = optional(any)
     }))
   }))
   default = {}
